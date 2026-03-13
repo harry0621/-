@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>與咪子有約 | Showa Modern Lounge</title>
+    <style>
+        :root {
+            --bg-deep: #0a0908;      
+            --bg-mid: #1a1613;       
+            --gold: #c5a059;         
+            --text-light: #e2dcd3;   
+        }
+
+        body {
+            margin: 0; padding: 0; color: var(--text-light);
+            font-family: "serif", "Noto Serif TC", "PMingLiU", serif;
+            line-height: 1.8; letter-spacing: 2px;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at center, var(--bg-mid) 0%, var(--bg-deep) 100%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='%23000' fill-opacity='0.1'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(10, 9, 8, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            z-index: 1000; display: flex; justify-content: center; padding: 15px 0;
+        }
+
+        nav a {
+            color: var(--gold); text-decoration: none; margin: 0 25px;
+            font-size: 0.95rem; letter-spacing: 3px; font-weight: bold;
+            cursor: pointer; transition: 0.3s;
+        }
+
+        .page { display: none; padding-top: 100px; animation: fadeIn 0.8s ease forwards; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            height: 50vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            border-bottom: 5px double var(--gold); margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3.5rem; letter-spacing: 15px; padding: 20px 40px;
+            border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+            color: var(--gold); text-shadow: 0 0 15px rgba(197, 160, 89, 0.5);
+            margin: 0;
+        }
+
+        .subtitle { font-size: 1.15rem; color: var(--gold); margin-top: 30px; letter-spacing: 5px; font-weight: bold; }
+
+        h2 { text-align: center; color: var(--gold); font-size: 2.2rem; margin: 50px 0; letter-spacing: 10px; }
+
+        .about-section { max-width: 1100px; margin: auto; padding: 0 20px; text-align: center; }
+        .about-text { margin-bottom: 60px; font-size: 1.1rem; line-height: 2.2; }
+        
+        .gallery {
+            display: flex; justify-content: space-between; gap: 20px;
+            margin: 40px 0 80px;
+        }
+        .gallery-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+        .gallery-item img { 
+            width: 100%; height: 260px; object-fit: cover; 
+            border: 1px solid rgba(197, 160, 89, 0.4); 
+        }
+        .img-caption { margin-top: 20px; color: var(--gold); font-size: 1rem; line-height: 1.6; }
+
+        .staff-list { display: flex; flex-direction: column; gap: 60px; padding: 0 20px 100px; }
+        .staff-card { 
+            display: flex; align-items: center; background: rgba(31, 26, 23, 0.5); 
+            border: 1px solid rgba(197, 160, 89, 0.2); max-width: 1000px; margin: auto; overflow: hidden;
+        }
+        .staff-card:nth-child(even) { flex-direction: row-reverse; }
+        .staff-img { flex: 1.3; height: 420px; }
+        .staff-img img { width: 100%; height: 100%; object-fit: cover; }
+        .staff-info { flex: 1; padding: 50px; }
+        .staff-name { font-size: 1.8rem; color: var(--gold); margin-bottom: 20px; border-bottom: 1px solid var(--gold); display: inline-block; }
+
+        .menu-box { max-width: 750px; margin: 0 auto 100px; border: 1px solid var(--gold); padding: 50px; background: rgba(0,0,0,0.4); }
+        .menu-table { width: 100%; border-collapse: collapse; }
+        .menu-table td { padding: 30px 10px; border-bottom: 1px solid rgba(197, 160, 89, 0.1); }
+        .price-val { 
+            text-align: right; color: var(--gold); font-family: "Georgia", serif; 
+            font-size: 1.4rem; font-style: italic; white-space: nowrap;
+        }
+
+        footer { text-align: center; padding: 80px; color: #666; font-size: 0.9rem; border-top: 1px solid rgba(197, 160, 89, 0.1); }
+
+        @media (max-width: 900px) {
+            .gallery { flex-direction: column; }
+            .staff-card, .staff-card:nth-child(even) { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a onclick="showPage('home')">關於我們</a>
+        <a onclick="showPage('staff')">店員介紹</a>
+        <a onclick="showPage('menu')">深夜價目</a>
+    </nav>
+
+    <div id="home" class="page active">
+        <header>
+            <div style="color:var(--gold); letter-spacing:8px; margin-bottom:10px; font-weight: bold;">ESTABLISHED 2026</div>
+            <h1>與咪子有約</h1>
+            <p class="subtitle">Showa Modern ｜ Performance ｜ Night Talk</p>
+        </header>
+
+        <section class="about-section">
+            <h2>關於我們</h2>
+            <div class="about-text">
+                <p>在白銀鄉的街道盡頭，隱藏著一扇通往昭和年代的大門。</p>
+                <p>這裡有咪子親手打造的華麗水幕，<br>
+                   以及為您留存、充滿復古光影的靜謐角落。</p>
+                <p>我們不只是一間酒吧，<br>
+                   更是這座城市裡，一處讓靈魂暫時停泊的失落之地。</p>
+            </div>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://media.discordapp.net/attachments/1475372965393727649/1481330863349170186/image.png?ex=69b4e69f&is=69b3951f&hm=d4b373f51af135be76cffe75423a64ac49471a14d7669f59d8d40380846c80a4&=&format=webp&quality=lossless&width=1376&height=774" alt="舞台">
+                    <div class="img-caption"><b>【昭和之夢】</b><br>和洋折衷的水慕舞台</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://media.discordapp.net/attachments/1475372965393727649/1481329561760305426/image.png?ex=69b4e569&is=69b393e9&hm=457b98b04f934ca3fef53a368d9969fb2ea56c5ab916ec8c69d27b625c7bfe75&=&format=webp&quality=lossless&width=1376&height=774" alt="吧檯">
+                    <div class="img-caption"><b>【沉寂吧檯】</b><br>在酒香中忘卻喧囂</div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="https://media.discordapp.net/attachments/1475372965393727649/1481329938954195064/image.png?ex=69b4e5c3&is=69b39443&hm=b5581b91402373575cd37203047dfb9f7ea062cd2cdbff9c6eb4014b76ca456f&=&format=webp&quality=lossless&width=1376&height=774" alt="座位">
+                    <div class="img-caption"><b>【摩登角落】</b><br>微光交織的舒心座席</div>
+                </div>
+            </div>
+            
+            <p style="color: var(--gold); font-weight: bold; font-size: 1.1rem;">
+                奧汀 伺服器 ｜ 白銀鄉7區2號公寓
+            </p>
+        </section>
+    </div>
+
+    <div id="staff" class="page">
+        <h2>STAFF</h2>
+        <div class="staff-list">
+            <div class="staff-card">
+                <div class="staff-img"><img src="https://media.discordapp.net/attachments/1475372965393727649/1481591335126302901/image.png?ex=69b53074&is=69b3def4&hm=c624fec667f742bc0cf70228a1e4f818cff0faab4e3c76a5e6f31f5cad83746a&=&format=webp&quality=lossless&width=1522&height=856" alt="咪子"></div>
+                <div class="staff-info">
+                    <div class="staff-name">咪子 Miko</div>
+                    <p>店主。這座歡樂之地，期待為每一位推開門扉的旅客送上一份溫暖。</p>
+                </div>
+            </div>
+            <div class="staff-card">
+                <div class="staff-img"><img src="https://cdn.discordapp.com/attachments/939911236114595940/1481973432525656154/ffxiv_20260311_234638_353.png?ex=69b542d0&is=69b3f150&hm=05c9e03b7b49838acbdbbb0ffdca315382e1defab87a7d9e2ae8a35cc82345dc&" alt="鹹魚"></div>
+                <div class="staff-info">
+                    <div class="staff-name">鹹魚 Saltedfish</div>
+                    <p>店員。以輕盈的對話與細膩的關懷，陪伴您度過這段慵懶的深夜時光。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="menu" class="page">
+        <h2>深夜價目表</h2>
+        <div class="menu-box">
+            <table class="menu-table">
+                <tr>
+                    <td>
+                        <b style="color:var(--gold); font-size:1.1rem;">昭和經典酒特調 / 手沖咖啡及紅茶</b><br>
+                        <small style="color:#888;">伴隨微光的入座之禮</small>
+                    </td>
+                    <td class="price-val"><i>500 Gil</i></td>
+                </tr>
+                <tr>
+                    <td>
+                        <b style="color:var(--gold); font-size:1.1rem;">指定陪伴服務 (15min)</b><br>
+                        <small style="color:#888;">價格依每位店員而定</small>
+                    </td>
+                    <td class="price-val"><i>50,000 Gil+</i></td>
+                </tr>
+                <tr>
+                    <td>
+                        <b style="color:var(--gold); font-size:1.1rem;">各式店員表演</b><br>
+                        <small style="color:#888;">舞台表演與旋律</small>
+                    </td>
+                    <td class="price-val"><i>打賞制</i></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        奧汀 伺服器 ｜ 白銀鄉7區2號公寓<br><br>
+        © 2026 與咪子有約 - All Rights Reserved.
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+</body>
+</html>
