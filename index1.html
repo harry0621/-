@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>與咪子有約 | Showa Modern Lounge</title>
+    <style>
+        :root {
+            --bg-deep: #0a0908;      
+            --bg-mid: #1a1613;       
+            --gold: #c5a059;         
+            --text-light: #e2dcd3;   
+            --border-soft: rgba(197, 160, 89, 0.2);
+        }
+
+        body {
+            margin: 0; padding: 0; color: var(--text-light);
+            font-family: "serif", "Noto Serif TC", "PMingLiU", serif;
+            line-height: 1.8; letter-spacing: 2px;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at center, var(--bg-mid) 0%, var(--bg-deep) 100%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='%23000' fill-opacity='0.1'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(10, 9, 8, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-soft);
+            z-index: 1000; display: flex; justify-content: center; padding: 15px 0;
+        }
+
+        nav a {
+            color: var(--gold); text-decoration: none; margin: 0 25px;
+            font-size: 0.95rem; letter-spacing: 3px; font-weight: bold;
+            cursor: pointer; transition: 0.3s;
+        }
+
+        .page { display: none; padding-top: 100px; animation: fadeIn 0.8s ease forwards; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            height: 40vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            border-bottom: 5px double var(--gold); margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3.2rem; letter-spacing: 12px; padding: 20px 40px;
+            border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+            color: var(--gold); text-shadow: 0 0 15px rgba(197, 160, 89, 0.5);
+            margin: 0;
+        }
+
+        .subtitle { font-size: 1.1rem; color: var(--gold); margin-top: 30px; letter-spacing: 5px; font-weight: bold; }
+        h2 { text-align: center; color: var(--gold); font-size: 2.2rem; margin: 50px 0; letter-spacing: 10px; }
+
+        .content-section { max-width: 1000px; margin: auto; padding: 0 20px; text-align: center; }
+        
+        .notice-box {
+            background: rgba(197, 160, 89, 0.05);
+            border: 1px solid var(--border-soft);
+            padding: 40px; margin: 60px 0; text-align: left; border-radius: 4px;
+        }
+        .notice-box h3 { color: var(--gold); border-left: 4px solid var(--gold); padding-left: 15px; margin-top: 0; margin-bottom: 25px; }
+        .notice-box p { margin: 10px 0; font-size: 0.95rem; line-height: 1.8; }
+
+        /* --- 圖片展示區排版調整：放大與優化 --- */
+        .gallery { 
+            display: flex; 
+            flex-direction: column; /* 改為直列排版以放大圖片 */
+            gap: 30px; /* 圖片之間的間距 */
+            margin: 50px auto 80px; 
+            max-width: 900px; /* 控制整體最大寬度 */
+        }
+        .gallery-item { 
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            border: 1px solid var(--border-soft);
+            background: rgba(26, 22, 19, 0.5);
+            overflow: hidden;
+        }
+        .gallery-item img { 
+            width: 100%; 
+            height: 500px; /* 顯著增加圖片高度 */
+            object-fit: cover; /* 確保圖片不變形並填滿 */
+            display: block;
+        }
+        .img-caption { 
+            width: 100%;
+            padding: 15px 0; 
+            color: var(--gold); 
+            font-size: 1rem; 
+            font-weight: bold;
+            text-align: center;
+            background: rgba(10, 9, 8, 0.8);
+            border-top: 1px solid var(--border-soft);
+        }
+
+        .staff-list { display: flex; flex-direction: column; gap: 40px; padding: 0 20px 100px; }
+        .staff-card { 
+            display: flex; background: rgba(26, 22, 19, 0.8); 
+            border: 1px solid var(--border-soft); max-width: 900px; margin: auto;
+        }
+        .staff-card:nth-child(even) { flex-direction: row-reverse; }
+        .staff-img { flex: 1; height: 400px; overflow: hidden; }
+        .staff-img img { width: 100%; height: 100%; object-fit: cover; }
+        .staff-info { flex: 1.2; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        .staff-name { 
+            font-size: 1.8rem; color: var(--gold); margin-bottom: 15px; 
+            padding-bottom: 10px; border-bottom: 1px solid var(--gold);
+            display: inline-block;
+        }
+        .staff-desc { font-size: 0.95rem; line-height: 2; margin-bottom: 25px; color: #ccc; }
+        .staff-special { border-top: 1px double var(--border-soft); padding-top: 20px; }
+        .special-title { color: var(--gold); font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 8px; }
+        .special-content { font-size: 0.9rem; color: var(--gold); font-style: italic; }
+
+        .menu-box { max-width: 750px; margin: 0 auto 100px; border: 1px solid var(--gold); padding: 50px; background: rgba(0,0,0,0.4); }
+        .menu-table { width: 100%; border-collapse: collapse; }
+        .menu-table td { padding: 30px 10px; border-bottom: 1px solid rgba(197, 160, 89, 0.1); }
+        .price-val { text-align: right; color: var(--gold); font-family: "Georgia", serif; font-size: 1.4rem; font-style: italic; white-space: nowrap; }
+
+        footer { text-align: center; padding: 80px; color: #555; font-size: 0.85rem; border-top: 1px solid var(--border-soft); }
+
+        @media (max-width: 800px) {
+            .gallery-item img { height: 300px; /* 手機版適度縮小高度 */ }
+            .staff-card, .staff-card:nth-child(even) { flex-direction: column; }
+            .staff-img { height: 300px; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a onclick="showPage('home')">關於我們</a>
+        <a onclick="showPage('staff')">店員介紹</a>
+        <a onclick="showPage('menu')">深夜價目</a>
+    </nav>
+
+    <div id="home" class="page active">
+        <header>
+            <div style="color:var(--gold); font-weight:bold; margin-bottom:10px;">ESTABLISHED 2026</div>
+            <h1>與咪子有約</h1>
+            <p class="subtitle">昭和摩登 ｜ 表演眾多 ｜ 深夜暢談</p>
+        </header>
+
+        <section class="content-section">
+            <div class="about-text">
+                <p>在白銀鄉的街道盡頭，隱藏著一扇通往昭和年代的大門。</p>
+                <p>這裡有咪子親手打造的華麗水幕，以及充滿復古光影的靜謐角落。</p>
+                <p>我們不只是一間酒吧，更是讓靈魂暫時停泊的失落之地。</p>
+                <p>奧汀 伺服器 ｜ 白銀鄉7區2號公寓</p>
+            </div>
+
+            <div class="notice-box">
+                <h3>入店須知</h3>
+                <p>1.進入本店，請將武器及寵物收起來，以保護店員及其他客人的安全。</p>
+                <p>2.本店可隨意參觀。如有rp服務需求請幫我將標誌改為希望組隊，會有店員來服務您。也請務必將rp標誌留給店員</p>
+                <p>3.本店服務低消為1000GIL，附飲料一杯，請隨意入座。如需指名服務請私訊RP標誌店員洽詢。</p>
+                <p>4.除每位店員可以指名聊天服務外，每位店員也有特殊指名服務，還請參考店員介紹。</p>
+                <p>4.本店不提供ERP服務，每位店員接受程度不同。請在雙方都能接受的程度暢談。</p>
+                <p>5.本店一到日皆有營業，表定營業時間21:00~02:00。還請各位顧客注意當日是否有店員排班，以獲得最佳體驗。</p>
+            </div>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://github.com/harry0621/-/blob/main/%E6%B0%B4%E5%B9%95.png?raw=true" alt="昭和之夢">
+                    <div class="img-caption">【昭和之夢】</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/harry0621/-/blob/main/%E8%88%9E%E5%8F%B0%E5%90%A7%E6%AA%AF.png?raw=true" alt="沉寂吧檯">
+                    <div class="img-caption">【沉寂吧檯】</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://github.com/harry0621/-/blob/main/%E5%BA%A7%E4%BD%8D.png?raw=true" alt="摩登角落">
+                    <div class="img-caption">【摩登角落】</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="staff" class="page">
+        <h2>STAFF</h2>
+        <div class="staff-list">
+            <div class="staff-card">
+                <div class="staff-img"><img src="https://github.com/harry0621/-/blob/main/%E5%92%AA%E5%AD%902.png?raw=true"></div>
+                <div class="staff-info">
+                    <div class="staff-name">咪子</div>
+                    <p class="staff-desc">店主。期待與每一位旅客共譜深夜的樂章。</p>
+                    <div class="staff-special">
+                        <span class="special-title">個人特殊指名服務：</span>
+                        <span class="special-content">【 此處填寫特殊服務內容 】</span>
+                    </div>
+                </div>
+            </div>
+            <div class="staff-card">
+                <div class="staff-img"><img src="https://github.com/harry0621/-/blob/main/%E9%B9%B9%E9%AD%9A2.png?raw=true"></div>
+                <div class="staff-info">
+                    <div class="staff-name">鹹魚</div>
+                    <p class="staff-desc">店員。以優雅的服務，帶您領略昭和氛圍的寧靜。</p>
+                    <div class="staff-special">
+                        <span class="special-title">個人特殊指名服務：</span>
+                        <span class="special-content">【 此處填寫特殊服務內容 】</span>
+                    </div>
+                </div>
+            </div>
+            <div class="staff-card">
+                <div class="staff-img"><img src="https://github.com/harry0621/-/blob/main/%E4%BC%8A%E8%90%8A.png?raw=true"></div>
+                <div class="staff-info">
+                    <div class="staff-name">伊萊諾斯</div>
+                    <p class="staff-desc">店員。展現獨特優雅的風采，與您分享這段靜謐的時光。</p>
+                    <div class="staff-special">
+                        <span class="special-title">個人特殊指名服務：</span>
+                        <span class="special-content">【 此處填寫特殊服務內容 】</span>
+                    </div>
+                </div>
+            </div>
+            <div class="staff-card">
+                <div class="staff-img"><img src="https://github.com/harry0621/-/blob/main/%E9%96%BB%E7%BE%85.png?raw=true"></div>
+                <div class="staff-info">
+                    <div class="staff-name">閻羅</div>
+                    <p class="staff-desc">帶上你的白日夢，給予你最極致的危險寵溺。</p>
+                    <div class="staff-special">
+                        <span class="special-title">個人特殊指名服務：</span>
+                        <span class="special-content">【 此處填寫特殊服務內容 】</span>
+                    </div>
+                </div>
+            </div>
+            <div class="staff-card">
+                <div class="staff-img"><img src="https://github.com/harry0621/-/blob/main/%E7%BE%BD%E7%A5%9E.png?raw=true"></div>
+                <div class="staff-info">
+                    <div class="staff-name">羽神天音</div>
+                    <p class="staff-desc">樂手。當琴弦撥動，為你洗去一天的疲憊，旋律會在心裡與你共鳴。</p>
+                    <div class="staff-special">
+                        <span class="special-title">個人特殊指名服務：</span>
+                        <span class="special-content">【 此處填寫特殊服務內容 】</span>
+                    </div>
+                </div>
+            </div>
+            <div class="staff-card">
+                <div class="staff-img"><img src="https://github.com/harry0621/-/blob/main/%E5%B0%8F%E9%9C%96%E5%85%92.png?raw=true"></div>
+                <div class="staff-info">
+                    <div class="staff-name">小霖兒</div>
+                    <p class="staff-desc">樂手。讓我為您演一首歌，閉上眼睛，把心交給我。這一刻，我希望您聽見幸福的顏色。</p>
+                    <div class="staff-special">
+                        <span class="special-title">個人特殊指名服務：</span>
+                        <span class="special-content">【 此處填寫特殊服務內容 】</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="menu" class="page">
+        <h2>深夜價目表</h2>
+        <div class="menu-box">
+            <table class="menu-table">
+                <tr>
+                    <td>
+                        <b style="color:var(--gold); font-size:1.1rem;">昭和經典雞尾酒特調 / 店員特調軟飲</b><br>
+                        <small style="color:#888;">伴隨微光的入座之禮</small>
+                    </td>
+                    <td class="price-val"><i>1000 Gil</i></td>
+                </tr>
+                <tr>
+                    <td>
+                        <b style="color:var(--gold); font-size:1.1rem;">指定陪伴服務 (15min)</b><br>
+                        <small style="color:#888;">價格依每位店員而定</small>
+                    </td>
+                    <td class="price-val"><i>50,000 Gil+</i></td>
+                </tr>
+                <tr>
+                    <td>
+                        <b style="color:var(--gold); font-size:1.1rem;">各式店員表演</b><br>
+                        <small style="color:#888;">舞台表演與旋律</small>
+                    </td>
+                    <td class="price-val"><i>打賞制</i></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        奧汀 伺服器 ｜ 白銀鄉7區2號公寓<br><br>
+        © 2026 與咪子有約 - All Rights Reserved.
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+</body>
+</html>
